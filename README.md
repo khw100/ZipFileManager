@@ -10,7 +10,7 @@ File info logging.
 
 Program currently works but is in heavy need of fine tuning and edge case testing.
 
-To be added:
+To be added:\
 Improved Menu Navigation.\
 SQLITE Logging.\
 Activity log.
