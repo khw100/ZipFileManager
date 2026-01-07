@@ -3,6 +3,9 @@
 
 NOTE: THIS PROJECT WILL BE UTILIZING SQLITE INSTEAD OF JSON FOR EASIER LOG ACCESS AND EDITING. CHANGES IN PROGRESS.
 
+Windows only for now.\
+Mac compatibility will be added later.
+
 This program is a portion of the larger Mod Manager Project I am working on dealing with:\
 Zip extraction.\
 File movement and deletion.\
