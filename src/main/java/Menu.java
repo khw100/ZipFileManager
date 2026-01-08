@@ -10,7 +10,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Kyler's Zip Manager Project");
-        System.out.println("Logs are stored at " + fm.logDirectoryPath);
+        System.out.println("Logs are stored at " + fm.mainFolder);
         System.out.println("\nThis program is for extracting zips, then moving and deleting the contents.");
 
         while(choice!=3) {

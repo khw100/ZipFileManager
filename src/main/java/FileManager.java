@@ -19,14 +19,14 @@ public class FileManager {
     Scanner sc = new Scanner(System.in);
 
     //Sets path adapted to different usernames for multiple users
-    final Path logDirectoryPath = Paths.get(System.getProperty("user.home"),"Documents").resolve("ZipManager");
+    final Path mainFolder = Paths.get(System.getProperty("user.home"),"Documents").resolve("ZipManager");
 
     //Creates directory for log storage and testing
     public void mainDirectoryCreate() {
 
         try{
-            if(!Files.exists(logDirectoryPath)) {
-                Files.createDirectory(logDirectoryPath);
+            if(!Files.exists(mainFolder)) {
+                Files.createDirectory(mainFolder);
             }
         }
         catch(IOException e) {
@@ -70,6 +70,7 @@ public class FileManager {
 
     //Extracts zip files and logs their destination and extraction date/time
     public void zipExtract(String origin, String destination) throws IOException {
+
         try(ZipFile z = new ZipFile(origin)) {
             z.extractAll(destination);
             System.out.println("\nZip has been extracted to the directory at: " + destination + "\n");
@@ -84,23 +85,41 @@ public class FileManager {
     }
 
     //Deletes full directory using recursion
-    public void deleteDir(File dir) {
-        File[] trash = dir.listFiles();
+    public void deleteDir(File toDelete) {
 
-        if(trash!=null) {
-            for(File f : trash) {
-                if(f.isDirectory()) {
-                    deleteDir(f);
-                }
-                else {
-                    f.delete();
+        //Makes sure the user doesn't accidentally delete too much
+        if(toDelete.getParentFile() == null){
+            System.out.println("Cannot delete root.");
+            return;
+        }
+
+
+        if(toDelete.isDirectory()){
+
+            //Reads files into array to iterate through and delete
+            File[] trash = toDelete.listFiles();
+
+            if(trash!=null) {
+                for(File f : trash) {
+                    if(f.isDirectory()) {
+                        deleteDir(f);
+                    }
+                    else {
+                        f.delete();
+                    }
                 }
             }
+            //Deletes empty directory
+            toDelete.delete();
         }
-        dir.delete();
+
+        //Deletes single files
+        else{
+            toDelete.delete();
+        }
     }
 
-    //Unimplemented
+    //Unimplemented, Deletes only the extracted files of a specific zip even in a populated folder
     public static void deleteExtractedFiles(File log){
 
     }

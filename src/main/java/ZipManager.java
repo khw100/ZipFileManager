@@ -1,6 +1,7 @@
 /**
  * @Author Kyler W
- * @Version 1/1/26
+ * @Version 1/1/26.
+ * @Java JDK 25
  * Zip File Manager Project
  *
  * Extracts zip files to specified folder.
@@ -8,6 +9,7 @@
  * Deletes files in directory.
  */
 
+import java.io.File;
 import java.io.IOException;
 
 public class ZipManager {
@@ -26,5 +28,8 @@ public class ZipManager {
         //User console menu display
         Menu m = new Menu();
         m.menuDisplay(fm);
+
+        //SQLite log testing
+        //l.sqlCreate();
     }
 }
