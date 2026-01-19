@@ -1,23 +1,22 @@
 #Zip Manager Project\
 (WIP)
 
-NOTE: THIS PROJECT WILL BE UTILIZING SQLITE INSTEAD OF JSON FOR EASIER LOG ACCESS AND EDITING. CHANGES IN PROGRESS.
+NOTE: PROJECT HAS BEEN CHANGED FROM JSON LOGGING TO SQLITE>
 
 Windows only for now.\
 Mac compatibility will be added later.
 
 This program is a portion of the larger Mod Manager Project I am working on dealing with:\
 Zip extraction.\
-File movement and deletion.\
+Tracking file movement for deletion.\
 File info logging.
 
-Program currently works but is in heavy need of fine tuning and edge case testing.
+Program currently works but may need more edge case testing.
 
 To be added:\
 Improved Menu Navigation.\
-SQLITE Logging.\
-Activity log.
-
+Log entry update and removal functions.\
+Activity log.\
 JavaFX GUI(Maybe).
 
 Mod Manager Project(Once this is completed).
