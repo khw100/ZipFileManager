@@ -1,7 +1,7 @@
 #Zip Manager Project\
 (WIP)
 
-NOTE: PROJECT HAS BEEN CHANGED FROM JSON LOGGING TO SQLITE>
+NOTE: PROJECT HAS BEEN CHANGED FROM JSON LOGGING TO SQLITE.
 
 Windows only for now.\
 Mac compatibility will be added later.
