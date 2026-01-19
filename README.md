@@ -11,7 +11,7 @@ Zip extraction.\
 Tracking file movement for deletion.\
 File info logging.
 
-Program currently works but may need more edge case testing.
+Program currently works but may need more edge case testing and testing on another device.
 
 To be added:\
 Improved Menu Navigation.\
