@@ -9,7 +9,6 @@
  * Deletes files in directory.
  */
 
-import java.io.File;
 import java.io.IOException;
 
 public class ZipManager {
@@ -18,18 +17,11 @@ public class ZipManager {
         //File logic class start
         FileManager fm = new FileManager();
 
-        //Logging class start
-        Logger l = new Logger();
-
         //Creates directory for testing or log storage
         fm.mainDirectoryCreate();
-        l.logCreate();
 
         //User console menu display
         Menu m = new Menu();
         m.menuDisplay(fm);
-
-        //SQLite log testing
-        //l.sqlCreate();
     }
 }

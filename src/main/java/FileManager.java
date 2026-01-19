@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.ZonedDateTime;
 import java.util.Scanner;
 
 
@@ -21,17 +20,28 @@ public class FileManager {
     //Sets path adapted to different usernames for multiple users
     final Path mainFolder = Paths.get(System.getProperty("user.home"),"Documents").resolve("ZipManager");
 
+    //Class for user's log
+    Logger l = new Logger();
+
     //Creates directory for log storage and testing
     public void mainDirectoryCreate() {
 
         try{
             if(!Files.exists(mainFolder)) {
                 Files.createDirectory(mainFolder);
+
+                //Creates log file in new main directory
+                l.sqlCreate();
             }
         }
         catch(IOException e) {
             System.out.println(e);
         }
+    }
+
+    //Displays log on user request
+    public void listFiles(){
+        l.displayModList();
     }
 
     //Checks if user input paths are valid, repeats if not, if valid, returns the file
@@ -75,13 +85,13 @@ public class FileManager {
             z.extractAll(destination);
             System.out.println("\nZip has been extracted to the directory at: " + destination + "\n");
         }
-        catch (ZipException e) {
-            System.out.println(e);
+        catch (ZipException ze) {
+            System.out.println(ze);
         }
 
-        FileInfo fi = new FileInfo(destination, ZonedDateTime.now());
-        Logger l = new Logger();
-        l.logAdd(fi);
+        //Calls logger class methods to add log entry and display the file list for each extraction
+        l.addEntry(origin, destination);
+        l.displayModList();
     }
 
     //Deletes full directory using recursion
