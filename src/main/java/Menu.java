@@ -1,5 +1,5 @@
 /**
- * Class for displaying menu.
+ * Class for displaying a menu.
  */
 
 import java.io.File;

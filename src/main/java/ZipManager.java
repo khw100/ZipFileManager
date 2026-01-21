@@ -6,7 +6,7 @@
  *
  * Extracts zip files to specified folder.
  * Tracks file location and zip extraction date.
- * Deletes files in directory.
+ * Deletes files in a directory.
  */
 
 import java.io.IOException;
