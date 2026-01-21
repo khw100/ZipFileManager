@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Logger {
 
@@ -27,31 +28,28 @@ public class Logger {
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM d, yyyy");
     String date;
 
+    ArrayList<Integer> IDS = new ArrayList<Integer>();
+
 
     //Creates SQLite db file for storing user's file information
     public void sqlCreate(){
 
         //Sqlite statement for creating formatted db log file
-        String createTable = """
+        String createMainTable = """
         CREATE TABLE IF NOT EXISTS mods (
+        ID INTEGER PRIMARY KEY,
         Name varchar(200),
         Version varchar(200),
         Path varchar(200)
     )
     """;
 
-        //SQLite statement for creating log index for search and retrieval
-        String createIndex = """
-        CREATE INDEX IF NOT EXISTS mod_index ON mods(Name)
-        """;
-
         //Creates and gets connection to db log file
         try(Connection c = DriverManager.getConnection(db);){
             Statement s = c.createStatement();
 
             //Formats and indexes table
-            s.execute(createTable);
-            s.execute(createIndex);
+            s.execute(createMainTable);
         }
         catch(SQLException se){
             System.out.println(se);
@@ -68,7 +66,7 @@ public class Logger {
             //Gets current date to store in log
             date = LocalDate.now().format(dateFormat);
 
-            System.out.println("Adding " + source + " " + date + " " + destination);
+            //System.out.println("Adding " + source + " " + date + " " + destination);
 
             //Adds log entry
             ps.setString(1, source);
@@ -89,12 +87,12 @@ public class Logger {
         try(Connection c = DriverManager.getConnection(db);){
             Statement s = c.createStatement();
 
-            ResultSet rs = s.executeQuery("SELECT Name, Version, Path FROM mods");
+            ResultSet rs = s.executeQuery("SELECT ID, Name, Version, Path FROM mods");
 
             System.out.println("\n_________________________________FILE LIST__________________________________________");
 
             while(rs.next()){
-                System.out.println("| " + rs.getString("Name") + " | " + rs.getString("Version") + " | " + rs.getString("Path") + " | ");
+                System.out.println("| " + rs.getInt("ID") + " | " + rs.getString("Name") + " | " + rs.getString("Version") + " | " + rs.getString("Path") + " | ");
             }
 
             System.out.println("____________________________________________________________________________________\n");

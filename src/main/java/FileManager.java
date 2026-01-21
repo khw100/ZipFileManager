@@ -19,12 +19,14 @@ public class FileManager {
 
     //Sets path adapted to different usernames for multiple users
     final Path mainFolder = Paths.get(System.getProperty("user.home"),"Documents").resolve("ZipManager");
+    final Path tempExtractFolder = mainFolder.resolve("Temp");
+    String tempEF = tempExtractFolder.toString();
 
     //Class for user's log
     Logger l = new Logger();
 
     //Creates directory for log storage and testing
-    public void mainDirectoryCreate() {
+    public void mainFilesCreate() {
 
         try{
             if(!Files.exists(mainFolder)) {
@@ -32,6 +34,10 @@ public class FileManager {
 
                 //Creates log file in new main directory
                 l.sqlCreate();
+
+                //Creates temporary folder for zip file extraction
+                Files.createDirectory(tempExtractFolder);
+
             }
         }
         catch(IOException e) {
@@ -79,10 +85,14 @@ public class FileManager {
     }
 
     //Extracts zip files and logs their destination and extraction date/time
-    public void zipExtract(String origin, String destination) throws IOException {
+    public void zipExtract(Path origin, Path destination) throws IOException {
 
-        try(ZipFile z = new ZipFile(origin)) {
-            z.extractAll(destination);
+        String og = origin.toString();
+
+        try(ZipFile z = new ZipFile(og)) {
+            //Extracts user file to temp folder
+            z.extractAll(tempEF);
+
             System.out.println("\nZip has been extracted to the directory at: " + destination + "\n");
         }
         catch (ZipException ze) {
@@ -90,7 +100,7 @@ public class FileManager {
         }
 
         //Calls logger class methods to add log entry and display the file list for each extraction
-        l.addEntry(origin, destination);
+        l.addEntry(origin.getFileName().toString(), destination.toString());
         l.displayModList();
     }
 

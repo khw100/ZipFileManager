@@ -4,6 +4,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Menu {
@@ -39,8 +40,11 @@ public class Menu {
                 File source = fm.pathChecker();
                 File destination = fm.pathChecker();
 
+                Path s = source.toPath();
+                Path d = destination.toPath();
+
                 try {
-                    fm.zipExtract(source.getAbsolutePath(), destination.getAbsolutePath());
+                    fm.zipExtract(s, d);
                 }
                 catch(IOException e) {
                     System.out.println(e);

@@ -18,7 +18,7 @@ public class ZipManager {
         FileManager fm = new FileManager();
 
         //Creates directory for testing or log storage
-        fm.mainDirectoryCreate();
+        fm.mainFilesCreate();
 
         //User console menu display
         Menu m = new Menu();
