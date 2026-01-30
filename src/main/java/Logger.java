@@ -84,6 +84,9 @@ public class Logger {
     //Displays log for user
     public void displayModList(){
 
+        //Log index number
+        int i = 1;
+
         try(Connection c = DriverManager.getConnection(db);){
             Statement s = c.createStatement();
 
@@ -92,7 +95,10 @@ public class Logger {
             System.out.println("\n_________________________________FILE LIST__________________________________________");
 
             while(rs.next()){
-                System.out.println("| " + rs.getInt("ID") + " | " + rs.getString("Name") + " | " + rs.getString("Version") + " | " + rs.getString("Path") + " | ");
+
+                System.out.printf("%-4s %-20s %-17s %-30s %n", i, rs.getString("Name"), rs.getString("Version"), rs.getString("Path"));
+
+                i++;
             }
 
             System.out.println("____________________________________________________________________________________\n");
@@ -102,13 +108,64 @@ public class Logger {
             System.out.println(se);
         }
     }
+
+    //Unimplemented
     public void updateEntry(){
 
     }
-    public void removeEntry(){
+    public void removeEntry(int i){
+        try(Connection c = DriverManager.getConnection(db);){
+            Statement s = c.createStatement();
 
-    }
-    public void closeLog(){
+            String delete = "DELETE FROM mods WHERE id = " + IDS.get(i-1);
 
+            s.executeUpdate(delete);
+        }
+        catch(SQLException se){
+            System.out.println(se);
+        }
     }
+
+    //Reads IDS from database to arraylist
+    public void readIDS(){
+
+        IDS.clear();
+
+        try(Connection c = DriverManager.getConnection(db);
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT ID FROM mods");){
+
+            while(rs.next()){
+                IDS.add(rs.getInt("ID"));
+            }
+        }
+        catch(SQLException se){
+            System.out.println(se);
+        }
+    }
+
+    public String getFilePath(int i){
+
+        String p = null;
+
+        try(Connection c = DriverManager.getConnection(db);){
+            Statement s = c.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT Path FROM mods WHERE id = " + IDS.get(i-1));
+
+            if(rs.next()){
+                p = rs.getString("Path");
+            }
+        }
+        catch(SQLException se){
+            System.out.println(se);
+        }
+
+        return p;
+    }
+
+    public int getIDListSize(){
+        return IDS.size();
+    }
+
 }

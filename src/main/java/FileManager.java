@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 
@@ -42,6 +43,11 @@ public class FileManager {
         catch(IOException e) {
             System.out.println(e);
         }
+    }
+
+    //Refreshes log id list
+    public void refresh(){
+        l.readIDS();
     }
 
     //Displays log on user request
@@ -103,8 +109,8 @@ public class FileManager {
         l.displayModList();
     }
 
-    //Deletes full directory using recursion
-    public void deleteDir(File toDelete) {
+    //Deletes full directory using recursion or singe file
+    public void delete(File toDelete) {
 
         //Makes sure the user doesn't accidentally delete too much
         if(toDelete.getParentFile() == null){
@@ -121,7 +127,7 @@ public class FileManager {
             if(trash!=null) {
                 for(File f : trash) {
                     if(f.isDirectory()) {
-                        deleteDir(f);
+                        delete(f);
                     }
                     else {
                         f.delete();
@@ -139,7 +145,25 @@ public class FileManager {
     }
 
     //Unimplemented, Deletes only the extracted files of a specific zip even in a populated folder
-    public static void deleteExtractedFiles(File log){
+    public void deleteExtractedFiles(int i){
 
+        int size = l.getIDListSize();
+
+        while(true){
+            if(size < 0 || i > size){
+                System.out.println("Invalid input. Number must be a listed index. Enter a new number.");
+                i = sc.nextInt();
+            }
+            else{
+                File f = new File(l.getFilePath(i));
+                delete(f);
+                l.removeEntry(i);
+                break;
+            }
+        }
+    }
+
+    public int getIDListSizeFM(){
+        return l.getIDListSize();
     }
 }
